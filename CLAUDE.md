@@ -9,7 +9,7 @@ A self-hosted Claude Code plugin marketplace for FORNAV AL development. It defin
 ## Installing into a Claude Code session
 
 ```
-/plugin marketplace add <path-or-git-remote-to-this-repo>
+/plugin marketplace add https://github.com/fornav/ForNav.Claude
 /plugin install fornav-al-reports@fornav-claude-plugins
 /plugin install fornav-al-tools@fornav-claude-plugins
 ```
@@ -57,3 +57,12 @@ Key concepts carried in the skills:
 1. To add a new skill to an existing plugin, create a subdirectory under `skills/` (e.g. `fornav-al-tools/skills/new-skill/`) with a `SKILL.md`. The frontmatter `description` field is what Claude uses to decide when to auto-trigger the skill — write it as a precise trigger condition, not a general description.
 2. To add a new plugin, create its directory with `.claude-plugin/plugin.json` and a `skills/` tree, then register it in `.claude-plugin/marketplace.json`.
 3. Templates and reference files are plain text/AL/Markdown — reference them from `SKILL.md` with relative paths. They are not auto-loaded; `SKILL.md` must explicitly instruct Claude to read them when needed.
+
+## Keeping README.md in sync
+
+After any change that adds, removes, or renames a plugin, skill, template, or reference file — **always update `README.md`** to reflect the change. Specifically:
+
+- If a skill is added or removed: update the plugins table, the skills reference section (name, auto-trigger condition, manual invocation command, and what it covers), and the repository layout tree.
+- If a skill's trigger condition or behaviour changes materially: update its entry in the skills reference section.
+- If a plugin is added or removed: update the plugins table, add/remove its skills reference section, update the install commands, and update the repository layout tree.
+- If a template or reference file is added or removed: update the repository layout tree and any skill description that references it.
