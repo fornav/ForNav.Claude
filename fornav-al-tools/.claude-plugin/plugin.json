@@ -1,0 +1,8 @@
+{
+  "name": "fornav-al-tools",
+  "version": "1.0.0",
+  "description": "Development workflow tools for ForNAV AL extensions — dependency switching and project setup.",
+  "author": {
+    "name": "René Brummel"
+  }
+}

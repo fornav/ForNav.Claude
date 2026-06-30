@@ -1,0 +1,20 @@
+{
+  "name": "fornav-claude-plugins",
+  "owner": {
+    "name": "René Brummel"
+  },
+  "plugins": [
+    {
+      "name": "fornav-al-reports",
+      "source": "./fornav-al-reports",
+      "description": "Guidance, scaffolding, and review for AL developers integrating with FORNAV reports (temp tables, layouts, report events) in Business Central.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "fornav-al-tools",
+      "source": "./fornav-al-tools",
+      "description": "Development workflow tools for ForNAV AL extensions — dependency switching and project setup.",
+      "version": "1.0.0"
+    }
+  ]
+}

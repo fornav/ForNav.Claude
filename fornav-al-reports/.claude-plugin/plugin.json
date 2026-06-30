@@ -1,0 +1,8 @@
+{
+  "name": "fornav-al-reports",
+  "version": "1.0.0",
+  "description": "Guidance, scaffolding, and review for AL developers integrating with FORNAV reports (temp tables, layouts, report events) in Business Central.",
+  "author": {
+    "name": "René Brummel"
+  }
+}
