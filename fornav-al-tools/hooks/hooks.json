@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit*)",
+            "shell": "bash",
+            "statusMessage": "Pre-commit: translations reminder",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"Pre-commit translations check: if any AL captions or tooltips were added or changed, update the .xlf files via the fornav-al-tools:translate skill (ForNAV JSON round-trip) before committing.\"}}'"
+          },
+          {
+            "type": "command",
+            "if": "Bash(git commit*)",
+            "shell": "bash",
+            "statusMessage": "Pre-commit: _docs reminder",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"Pre-commit docs check: update the _docs/ end-user guides to reflect the latest changes before committing.\"}}'"
+          }
+        ]
+      }
+    ]
+  }
+}
