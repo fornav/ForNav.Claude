@@ -28,14 +28,17 @@ Cmdlets used (from `ForNav.Cmdlet.dll`):
    so it must be current (see Step 2).
 
 The module DLL is normally at `C:\Program Files\Reports ForNAV\ForNav.Cmdlet.dll`.
-If it's elsewhere, locate it before starting.
+If it's elsewhere, locate it before starting. If it's not installed at all, tell the
+user to install the ForNAV cmdlet from https://www.fornav.com/download/ — Claude should
+not attempt to download or install it itself.
 
 ## Step 1 — Confirm prerequisites
 
 - `app.json` contains `"TranslationFile"` in `features`. If not, tell the user this must
   be added (and the project rebuilt) before translations can be generated; stop.
-- Locate `ForNav.Cmdlet.dll`. Identify the `Translations/` folder (holds
-  `<AppName>.g.xlf` plus one `translation-<locale>.xlf` per language).
+- Locate `ForNav.Cmdlet.dll`. If it's missing, stop and point the user to
+  https://www.fornav.com/download/ to install it. Identify the `Translations/` folder
+  (holds `<AppName>.g.xlf` plus one `translation-<locale>.xlf` per language).
 
 ## Step 2 — Refresh the generated `.g.xlf`
 
