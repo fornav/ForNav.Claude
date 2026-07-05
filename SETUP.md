@@ -1,7 +1,7 @@
 # Setup — initialise the ForNAV Claude tooling in a Business Central AL project
 
 A checklist to give any BC / AL extension project the same Claude Code setup: the
-`fornav-al-tools` plugin (skills: `extract-layout`, `translate`) and the AL MCP server.
+`fornav-al-tools` plugin (skills: `fornav-extract-layout`, `fornav-translate`) and the AL MCP server.
 
 Run these steps once per project (steps 1 & 3 are committed to the repo; step 2 is
 per-machine).
@@ -12,7 +12,7 @@ per-machine).
 - **AL Language extension** (`ms-dynamics-smb.al`) installed in VS Code — provides
   `altool.exe` / `alc.exe`.
 - **ForNAV cmdlet module** (`ForNav.Cmdlet.dll`, normally
-  `C:\Program Files\Reports ForNAV\`) — needed by the `translate` skill. Install from
+  `C:\Program Files\Reports ForNAV\`) — needed by the `fornav-translate` skill. Install from
   https://www.fornav.com/download/ if missing.
 - **Windows PowerShell 5.1** (`powershell.exe`) — the ForNAV cmdlets are .NET Framework
   and do **not** run under PowerShell 7 (`pwsh`).
@@ -68,7 +68,7 @@ Add to the project's `.gitignore` so per-developer overrides never get committed
 ## Step 4 — Verify
 
 - `claude mcp list` → the `al` server is listed (approve if pending).
-- In a Claude session, `/fornav-al-tools:translate` (and `extract-layout`) are available.
+- In a Claude session, `/fornav-al-tools:fornav-translate` (and `fornav-extract-layout`) are available.
 
 ## Optional — project conventions
 
@@ -76,7 +76,7 @@ If the project uses them, mirror these so Claude follows the house style:
 
 - **`_Architecture/`** — technical feature specs (Claude reads these first when building).
 - **`_docs/`** — plain-language end-user guides (no AL objects/fields/code).
-- A short **CLAUDE.md** note pointing at the `translate` skill for translations, and the
+- A short **CLAUDE.md** note pointing at the `fornav-translate` skill for translations, and the
   ID-range / affix conventions for the extension.
 
 ## Publishing plugin changes

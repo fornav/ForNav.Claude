@@ -1,5 +1,5 @@
 ---
-name: extract-layout
+name: fornav-extract-layout
 description: Use when asked to extract, inspect, or view the DataContract or layout JSON from a FORNAV report .docx layout file, or from an AL report file that references a FORNAV .docx layout. Also use when troubleshooting FORNAV report dataset or field availability by examining what the layout's DataContract declares.
 ---
 

@@ -16,7 +16,7 @@ A self-hosted Claude Code plugin marketplace for FORNAV AL development. It defin
 
 Once installed, skills auto-trigger on relevant context, or can be invoked directly:
 - `/fornav-al-reports:fornav-al-reports` — FORNAV report integration guidance and scaffolding
-- `/fornav-al-tools:extract-layout` — extract DataContract/layout JSON from a FORNAV `.docx`
+- `/fornav-al-tools:fornav-extract-layout` — extract DataContract/layout JSON from a FORNAV `.docx`
 
 ## Repository structure
 
@@ -32,9 +32,9 @@ fornav-al-reports/
       direct-usetemporary-dataitem.al    # Copy-ready AL for the UseTemporary DataItem pattern
 fornav-al-tools/
   .claude-plugin/plugin.json             # Plugin manifest
-  skills/extract-layout/
+  skills/fornav-extract-layout/
     SKILL.md                             # Skill definition
-  skills/translate/
+  skills/fornav-translate/
     SKILL.md                             # Skill definition
 ```
 
@@ -55,7 +55,7 @@ Key concepts carried in the skills:
 
 ## Adding or modifying skills
 
-1. To add a new skill to an existing plugin, create a subdirectory under `skills/` (e.g. `fornav-al-tools/skills/new-skill/`) with a `SKILL.md`. The frontmatter `description` field is what Claude uses to decide when to auto-trigger the skill — write it as a precise trigger condition, not a general description.
+1. To add a new skill to an existing plugin, create a subdirectory under `skills/` (e.g. `fornav-al-tools/skills/fornav-new-skill/`) with a `SKILL.md`. The frontmatter `description` field is what Claude uses to decide when to auto-trigger the skill — write it as a precise trigger condition, not a general description. **Every skill in this marketplace is prefixed `fornav-`** (directory name and frontmatter `name` both) — it distinguishes these from the user's personal skills in `~/.claude/skills/` (which use a `red-` prefix) and signals the skill ships as part of the FORNAV plugin rather than a one-off personal convenience.
 2. To add a new plugin, create its directory with `.claude-plugin/plugin.json` and a `skills/` tree, then register it in `.claude-plugin/marketplace.json`.
 3. Templates and reference files are plain text/AL/Markdown — reference them from `SKILL.md` with relative paths. They are not auto-loaded; `SKILL.md` must explicitly instruct Claude to read them when needed.
 

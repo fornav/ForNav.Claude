@@ -1,5 +1,5 @@
 ---
-name: translate
+name: fornav-translate
 description: Use when asked to translate an AL Business Central extension, fill in or update .xlf translations, or add a new language to a project's Translations folder — using the ForNAV cmdlet's JSON round-trip so Claude can edit the translations directly instead of a human editing Excel. Covers exporting captions to JSON, filling target-language values, and importing back to .xlf.
 ---
 

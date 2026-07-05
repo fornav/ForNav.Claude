@@ -57,26 +57,26 @@ What it covers:
 
 ---
 
-### `extract-layout`
+### `fornav-extract-layout`
 
 **Auto-triggers** when you ask to extract, inspect, or view the DataContract or layout JSON from a FORNAV `.docx` file, or when troubleshooting why a report field isn't appearing in a layout.
 
 **Invoke manually:**
 ```
-/fornav-al-tools:extract-layout
+/fornav-al-tools:fornav-extract-layout
 ```
 
 Give it a `.docx` path or an `.al` file that references one. It extracts `DataContract.json` and `Layout.json` next to the source file, then summarises the data items and fields the layout knows about.
 
 ---
 
-### `translate`
+### `fornav-translate`
 
 **Auto-triggers** when you ask to translate an AL extension, fill in or update `.xlf` translations, or add a new language to a project's `Translations` folder.
 
 **Invoke manually:**
 ```
-/fornav-al-tools:translate
+/fornav-al-tools:fornav-translate
 ```
 
 Uses the ForNAV cmdlet's **JSON** round-trip (`Invoke-ExportTranslationFromXlfToJson` / `Invoke-ImportTranslationFromJsonToXlf`) so Claude edits the translations directly instead of a human editing Excel: refreshes the `.g.xlf`, exports to JSON, fills the missing target-language values, and imports back to `translation-<locale>.xlf`. Requires `"TranslationFile"` in `app.json` features and Windows PowerShell 5.1 (the ForNAV DLL doesn't run under PowerShell 7).
@@ -108,6 +108,6 @@ fornav-al-reports/
 fornav-al-tools/
   .claude-plugin/plugin.json
   skills/
-    extract-layout/SKILL.md
-    translate/SKILL.md
+    fornav-extract-layout/SKILL.md
+    fornav-translate/SKILL.md
 ```
