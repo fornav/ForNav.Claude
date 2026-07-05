@@ -1,8 +1,7 @@
 # Setup — initialise the ForNAV Claude tooling in a Business Central AL project
 
 A checklist to give any BC / AL extension project the same Claude Code setup: the
-`fornav-al-tools` plugin (skills: `swap-deps`, `extract-layout`, `translate`; plus the
-pre-commit translation/`_docs` reminder hooks) and the AL MCP server.
+`fornav-al-tools` plugin (skills: `extract-layout`, `translate`) and the AL MCP server.
 
 Run these steps once per project (steps 1 & 3 are committed to the repo; step 2 is
 per-machine).
@@ -34,8 +33,7 @@ Add to the project's `.claude/settings.json` (merge with any existing keys):
 ```
 
 On next open, Claude Code registers the marketplace and enables the plugin — the skills
-and the pre-commit hooks come with it. You'll get a one-time plugin-trust prompt per
-machine.
+come with it. You'll get a one-time plugin-trust prompt per machine.
 
 > The source is the **published** GitHub marketplace. Changes made only in a local clone
 > of `ForNav.Claude` won't be picked up until they're committed and pushed to
@@ -70,17 +68,14 @@ Add to the project's `.gitignore` so per-developer overrides never get committed
 ## Step 4 — Verify
 
 - `claude mcp list` → the `al` server is listed (approve if pending).
-- In a Claude session, `/fornav-al-tools:translate` (and `swap-deps`, `extract-layout`)
-  are available.
-- Attempt a `git commit` → the two pre-commit reminders (translations + `_docs`) prompt.
+- In a Claude session, `/fornav-al-tools:translate` (and `extract-layout`) are available.
 
 ## Optional — project conventions
 
 If the project uses them, mirror these so Claude follows the house style:
 
 - **`_Architecture/`** — technical feature specs (Claude reads these first when building).
-- **`_docs/`** — plain-language end-user guides (no AL objects/fields/code). The pre-commit
-  hook reminds you to keep these current.
+- **`_docs/`** — plain-language end-user guides (no AL objects/fields/code).
 - A short **CLAUDE.md** note pointing at the `translate` skill for translations, and the
   ID-range / affix conventions for the extension.
 

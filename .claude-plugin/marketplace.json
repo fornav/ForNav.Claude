@@ -13,7 +13,7 @@
     {
       "name": "fornav-al-tools",
       "source": "./fornav-al-tools",
-      "description": "Development workflow tools for ForNAV AL extensions — dependency switching, translation, project setup, and pre-commit workflow hooks.",
+      "description": "Development workflow tools for ForNAV AL extensions — layout extraction and translation.",
       "version": "1.1.0"
     }
   ]

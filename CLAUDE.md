@@ -16,7 +16,7 @@ A self-hosted Claude Code plugin marketplace for FORNAV AL development. It defin
 
 Once installed, skills auto-trigger on relevant context, or can be invoked directly:
 - `/fornav-al-reports:fornav-al-reports` — FORNAV report integration guidance and scaffolding
-- `/fornav-al-tools:swap-deps` — swap `app.json` dependencies between e4 dev and release mode
+- `/fornav-al-tools:extract-layout` — extract DataContract/layout JSON from a FORNAV `.docx`
 
 ## Repository structure
 
@@ -32,8 +32,10 @@ fornav-al-reports/
       direct-usetemporary-dataitem.al    # Copy-ready AL for the UseTemporary DataItem pattern
 fornav-al-tools/
   .claude-plugin/plugin.json             # Plugin manifest
-  skills/swap-deps/
-    SKILL.md                             # Skill definition — reads/writes app.json in the target repo
+  skills/extract-layout/
+    SKILL.md                             # Skill definition
+  skills/translate/
+    SKILL.md                             # Skill definition
 ```
 
 ## Plugin / skill anatomy
@@ -50,7 +52,6 @@ fornav-al-tools/
 Key concepts carried in the skills:
 - The primary integration point is `Codeunit::"ForNAV TempTable"` → event `OnFillTemporaryTable` (public `[IntegrationEvent]`). The older `OnForNAVFillTemporaryTableForNAV` is `[Obsolete]` since FORNAV 8.2; the third event `OnFillTemporaryTableInternal` is `[InternalEvent]` and not subscribable from outside the extension.
 - FORNAV's reserved app ID range: **6188471–6189470** and publisher prefix `ForNAV` — never use these in customer/partner extensions.
-- `swap-deps` switches `app.json` between a single e4-dev dependency (`d6978c22-...`) and the normal three-package release set (Language Module, Core, Customizable Report Pack), all at version `8.2.0.0`.
 
 ## Adding or modifying skills
 
