@@ -134,7 +134,18 @@ rendering
 
 A `reportextension` lets you add to an existing FORNAV report — a new column, a request page field, or an additional built-in layout — without touching the base report's AL object or its existing layout files.
 
-### Adding a column
+### Adding a column — only needed for computed values
+
+Unlike a standard AL/RDLC report, FORNAV does not need every field to be serialized into
+the dataset as a column. FORNAV queries the underlying table **directly** at render time,
+so a plain database field — whether it's a standard field that's always been on the table,
+or one you added via a `tableextension` — is already available to the layout with no
+`reportextension` column and no AL change at all. Bind to it in the Designer by the field
+name, same as any other field on that DataItem's table.
+
+Only add a `reportextension` column when the value **doesn't already exist as a field** —
+it has to be computed, looked up, or assembled in AL (string formatting, a flowfield-style
+calculation, concatenation, etc.):
 
 ```al
 reportextension 50000 "PTE ForNAV VAT Sales Invoice" extends "ForNAV VAT Sales Invoice"
