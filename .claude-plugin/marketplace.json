@@ -8,7 +8,7 @@
       "name": "fornav-al-reports",
       "source": "./fornav-al-reports",
       "description": "Guidance, scaffolding, and review for AL developers integrating with FORNAV reports (temp tables, layouts, report events) in Business Central.",
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "name": "fornav-al-tools",

@@ -53,6 +53,7 @@ What it covers:
 - Scaffolding new integrations (picks up your repo's ID range and naming prefix)
 - Reviewing existing code for common mistakes
 - Layout activation priority (why a layout change doesn't seem to apply)
+- Where layouts are actually stored and how to enumerate/resolve them in AL — built-in (`Report Layout List`) vs custom (`Tenant Report Layout`), which `ReadDataContract` overload to use, and the existing buffer builder that merges both (see `reference/layout-storage.md`)
 - Less-common events: email scenario mapping, e-invoicing, text/HTML splitters
 
 ---
@@ -102,6 +103,7 @@ fornav-al-reports/
   skills/fornav-al-reports/
     SKILL.md                             # Main skill definition and guidance
     reference/events-catalog.md          # Email, e-invoicing, splitter events
+    reference/layout-storage.md          # Report Layout List vs Tenant Report Layout, ReadDataContract overloads
     templates/
       event-subscriber-temptable.al      # Copy-ready AL — event subscriber pattern
       direct-usetemporary-dataitem.al    # Copy-ready AL — UseTemporary pattern

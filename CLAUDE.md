@@ -27,6 +27,7 @@ fornav-al-reports/
   skills/fornav-al-reports/
     SKILL.md                             # Skill definition (frontmatter triggers + full guidance)
     reference/events-catalog.md          # Less-common integration events (email, e-invoicing, splitters)
+    reference/layout-storage.md          # Report Layout List vs Tenant Report Layout, ReadDataContract overloads
     templates/
       event-subscriber-temptable.al      # Copy-ready AL for the OnFillTemporaryTable pattern
       direct-usetemporary-dataitem.al    # Copy-ready AL for the UseTemporary DataItem pattern
@@ -52,6 +53,7 @@ fornav-al-tools/
 Key concepts carried in the skills:
 - The primary integration point is `Codeunit::"ForNAV TempTable"` → event `OnFillTemporaryTable` (public `[IntegrationEvent]`). The older `OnForNAVFillTemporaryTableForNAV` is `[Obsolete]` since FORNAV 8.2; the third event `OnFillTemporaryTableInternal` is `[InternalEvent]` and not subscribable from outside the extension.
 - FORNAV's reserved app ID range: **6188471–6189470** and publisher prefix `ForNAV` — never use these in customer/partner extensions.
+- Layouts live in two separate BC system tables — `Report Layout List` (built-in) and `Tenant Report Layout` (custom/tenant-uploaded) — merged by `Codeunit "ForNAV Report Layout Mgt.".CreateBuffer`; see `reference/layout-storage.md`.
 
 ## Adding or modifying skills
 
