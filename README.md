@@ -58,6 +58,34 @@ What it covers:
 
 ---
 
+### `fornav-zugferd-customization`
+
+**Auto-triggers** when you want to add, correct, or override a field/line/note/reference in the
+ZUGFeRD/XRechnung/Factur-X (EN16931) e-invoice XML that FORNAV's E-invoicing (ZugFerd) extension
+generates, mention the `InvoiceDescriptor` record, ask about BT-xxx business terms or XRechnung profiles,
+or ask why a ZUGFeRD customization for another app won't compile against ZugFerd.
+
+**Invoke manually:**
+```
+/fornav-al-reports:fornav-zugferd-customization
+```
+
+What it covers:
+- The `internalsVisibleTo` gate on ZugFerd's `OnAfterDocument2InvoiceDescriptor` event — the most common
+  blocker, and why the fix has to happen on ZugFerd's side, not in the subscriber
+- `OnAfterDocument2InvoiceDescriptor` (additive customization) vs `OnDocument2InvoiceDescriptor` (full
+  mapping replacement) — which one to reach for
+- The `InvoiceDescriptor` object model — `InitXxx`/`FindFirstXxx` child-collection pattern, and why a
+  child record's own `.Insert()`/`.Modify()`/`.Delete()` only persists on BC22+ (see
+  `reference/object-model.md`)
+- Why `.Type`/`.Name` can't distinguish sibling document types (e.g. Sales vs. Service Credit Memo) and
+  what to check instead
+- When to fetch FeRD's own ZUGFeRD download page instead of relying on training data for BT-xxx business
+  term semantics
+- Testing guidance: compiling against ZugFerd's `.alpackages`, exercising the real print/attach path
+
+---
+
 ### `fornav-extract-layout`
 
 **Auto-triggers** when you ask to extract, inspect, or view the DataContract or layout JSON from a FORNAV `.docx` file, or when troubleshooting why a report field isn't appearing in a layout.
@@ -107,6 +135,9 @@ fornav-al-reports/
     templates/
       event-subscriber-temptable.al      # Copy-ready AL — event subscriber pattern
       direct-usetemporary-dataitem.al    # Copy-ready AL — UseTemporary pattern
+  skills/fornav-zugferd-customization/
+    SKILL.md                             # ZUGFeRD/XRechnung/Factur-X e-invoice XML customization guidance
+    reference/object-model.md            # InvoiceDescriptor child-record model, BC22 Insert/Modify split, worked example
 fornav-al-tools/
   .claude-plugin/plugin.json
   skills/

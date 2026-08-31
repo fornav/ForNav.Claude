@@ -16,6 +16,7 @@ A self-hosted Claude Code plugin marketplace for FORNAV AL development. It defin
 
 Once installed, skills auto-trigger on relevant context, or can be invoked directly:
 - `/fornav-al-reports:fornav-al-reports` — FORNAV report integration guidance and scaffolding
+- `/fornav-al-reports:fornav-zugferd-customization` — ZUGFeRD/XRechnung/Factur-X e-invoice XML customization via `OnAfterDocument2InvoiceDescriptor`
 - `/fornav-al-tools:fornav-extract-layout` — extract DataContract/layout JSON from a FORNAV `.docx`
 
 ## Repository structure
@@ -31,6 +32,9 @@ fornav-al-reports/
     templates/
       event-subscriber-temptable.al      # Copy-ready AL for the OnFillTemporaryTable pattern
       direct-usetemporary-dataitem.al    # Copy-ready AL for the UseTemporary DataItem pattern
+  skills/fornav-zugferd-customization/
+    SKILL.md                             # Skill definition — ZUGFeRD/XRechnung/Factur-X e-invoice XML customization
+    reference/object-model.md            # InvoiceDescriptor child-record model, BC22 Insert/Modify split, worked example
 fornav-al-tools/
   .claude-plugin/plugin.json             # Plugin manifest
   skills/fornav-extract-layout/
@@ -53,6 +57,7 @@ fornav-al-tools/
 Key concepts carried in the skills:
 - The primary integration point is `Codeunit::"ForNAV TempTable"` → event `OnFillTemporaryTable` (public `[IntegrationEvent]`). The older `OnForNAVFillTemporaryTableForNAV` is `[Obsolete]` since FORNAV 8.2; the third event `OnFillTemporaryTableInternal` is `[InternalEvent]` and not subscribable from outside the extension.
 - FORNAV's reserved app ID range: **6188471–6189470** and publisher prefix `ForNAV` — never use these in customer/partner extensions.
+- ZUGFeRD/e-invoicing customization goes through `Codeunit::"ForNAV eDocument Interface"` → event `OnAfterDocument2InvoiceDescriptor` (`[IntegrationEvent]`, but `internal` — the subscribing app must be listed in ZugFerd's `app.json` `internalsVisibleTo` first); see `skills/fornav-zugferd-customization/`.
 - Layouts live in two separate BC system tables — `Report Layout List` (built-in) and `Tenant Report Layout` (custom/tenant-uploaded) — merged by `Codeunit "ForNAV Report Layout Mgt.".CreateBuffer`; see `reference/layout-storage.md`.
 
 ## Adding or modifying skills
