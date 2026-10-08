@@ -61,12 +61,11 @@ Either way: get/init the child record via the parent record's own `InitXxx`/`Fin
 construct the child record from scratch.
 
 `"ForNAV eDocument"` also has its own generic `FindFirst(ChildRec: Variant): Boolean`, but don't call it
-directly — it's an internal implementation detail the generated `FindFirstXxx` wrappers are built on, not
-part of the public surface, and (unlike `Insert`/`Modify`/`Delete`) it's `internal`, so it isn't even
-visible to a downstream app without an `internalsVisibleTo` grant. *Finding* an existing child record
-should always go through the parent record's own `FindFirstXxx` (e.g. `InvoiceDescriptor.FindFirstNotes`)
-— it's plain `public`, consistent with every `InitXxx` counterpart, and it's the one that actually filters
-to the right child rows for that specific parent instance.
+directly — it's an implementation detail the generated `FindFirstXxx` wrappers are built on, not part of
+the supported surface (unlike `Insert`/`Modify`/`Delete`). *Finding* an existing child record should always
+go through the parent record's own `FindFirstXxx` (e.g. `InvoiceDescriptor.FindFirstNotes`) — consistent
+with every `InitXxx` counterpart, and it's the one that actually filters to the right child rows for that
+specific parent instance.
 
 ## Worked example: a header note + a custom discount line
 
@@ -130,9 +129,8 @@ codeunit 50100 "My Company ZUGFeRD Custom."
 
 Notes on this example:
 
-- `MapTo.AddTradeAllowanceCharge` and the other helpers on `"ForNAV Map to eDocument"` are `internal` —
-  calling them requires the same `internalsVisibleTo` grant as the event subscription itself (see
-  `SKILL.md`). If that access isn't available, populate `TempTradeAllowanceCharge`'s fields directly
+- `MapTo.AddTradeAllowanceCharge` and the other helpers on `"ForNAV Map to eDocument"` are declared
+  `internal`. If a helper isn't available to your app, populate `TempTradeAllowanceCharge`'s fields directly
   instead (check `TradeAllowanceCharge.Table.al` for the field list) and skip the helper.
 - `AddTradeAllowanceCharge`'s VAT %/reverse-charge parameters need to match the actual tax treatment of
   the discount, not be hardcoded — the placeholder values above are there to show the call shape, not as

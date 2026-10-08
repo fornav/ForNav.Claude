@@ -62,8 +62,7 @@ What it covers:
 
 **Auto-triggers** when you want to add, correct, or override a field/line/note/reference in the
 ZUGFeRD/XRechnung/Factur-X (EN16931) e-invoice XML that FORNAV's E-invoicing (ZugFerd) extension
-generates, mention the `InvoiceDescriptor` record, ask about BT-xxx business terms or XRechnung profiles,
-or ask why a ZUGFeRD customization for another app won't compile against ZugFerd.
+generates, mention the `InvoiceDescriptor` record, or ask about BT-xxx business terms or XRechnung profiles.
 
 **Invoke manually:**
 ```
@@ -71,8 +70,6 @@ or ask why a ZUGFeRD customization for another app won't compile against ZugFerd
 ```
 
 What it covers:
-- The `internalsVisibleTo` gate on ZugFerd's `OnAfterDocument2InvoiceDescriptor` event — the most common
-  blocker, and why the fix has to happen on ZugFerd's side, not in the subscriber
 - `OnAfterDocument2InvoiceDescriptor` (additive customization) vs `OnDocument2InvoiceDescriptor` (full
   mapping replacement) — which one to reach for
 - The `InvoiceDescriptor` object model — `InitXxx`/`FindFirstXxx` child-collection pattern, and why a

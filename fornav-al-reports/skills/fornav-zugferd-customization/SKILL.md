@@ -1,44 +1,22 @@
 ---
 name: fornav-zugferd-customization
-description: Customize or extend ZUGFeRD/XRechnung/Factur-X e-invoice XML output in the ForNAV E-invoicing (ZugFerd) Business Central AL extension by subscribing to the "ForNAV eDocument Interface" codeunit's OnAfterDocument2InvoiceDescriptor event. Use this whenever the user wants to add, correct, or override a field/line/note/reference in the generated ZUGFeRD/EN16931 invoice XML, mentions the InvoiceDescriptor record, asks about BT-xxx business terms, XRechnung profiles, Factur-X, or wants a customer-specific tweak to the e-invoice mapping — even if they don't name the event directly. Also use it when the user asks why a ZUGFeRD customization for another app/extension won't compile against ZugFerd.
+description: Customize or extend ZUGFeRD/XRechnung/Factur-X e-invoice XML output in the ForNAV E-invoicing (ZugFerd) Business Central AL extension by subscribing to the "ForNAV eDocument Interface" codeunit's OnAfterDocument2InvoiceDescriptor event. Use this whenever the user wants to add, correct, or override a field/line/note/reference in the generated ZUGFeRD/EN16931 invoice XML, mentions the InvoiceDescriptor record, asks about BT-xxx business terms, XRechnung profiles, Factur-X, or wants a customer-specific tweak to the e-invoice mapping — even if they don't name the event directly.
 ---
 
 # ZUGFeRD customization via OnAfterDocument2InvoiceDescriptor
 
-## Start here: the internal-access gotcha
+## Prerequisites
 
-`OnAfterDocument2InvoiceDescriptor` is declared `internal` in ZugFerd's `eDocumentInterface.Codeunit.al`:
+A downstream app subscribes to `OnAfterDocument2InvoiceDescriptor` on the `"ForNAV eDocument Interface"`
+codeunit in ZugFerd with a normal `[EventSubscriber]` — no special arrangement with FORNAV is needed.
 
-```al
-[IntegrationEvent(false, false)]
-internal procedure OnAfterDocument2InvoiceDescriptor(var InvoiceDescriptor: Record "ForNAV InvoiceDescriptor")
-begin
-end;
-```
+The only requirement is an ordinary AL `dependencies` entry on `"ForNAV E-invoicing"` (id
+`9347ed4c-a512-4ff0-a15e-6344804918f9`) in the downstream app's own `app.json`, so the symbols resolve.
 
-An `internal` procedure in AL can only be subscribed to from the same app, or from an app whose ID is
-listed under `internalsVisibleTo` in ZugFerd's `app.json`. Before writing a single line of subscriber
-code, ask whoever maintains ZugFerd to confirm the customer/partner app is listed there. If it isn't, the
-subscriber will fail to compile with an access error no matter how correct the AL is — and the fix isn't
-in the subscriber, it's adding that app's id/name/publisher to ZugFerd's `internalsVisibleTo` array (a
-ZugFerd-side change you can't make from a downstream extension, so flag this rather than silently
-attempting workarounds like copying the event elsewhere).
-
-If the customization lives inside ZugFerd itself (e.g. you're extending ForNAV's own codebase, not a
-downstream customer app), this doesn't apply — skip straight to writing the subscriber.
-
-A downstream app also needs an ordinary AL `dependencies` entry on `"ForNAV E-invoicing"` (id
-`9347ed4c-a512-4ff0-a15e-6344804918f9`) in its own `app.json` to resolve the symbols at all —
-`internalsVisibleTo` only grants *access*, it doesn't substitute for the dependency declaration.
-
-This is a single, unified gate, not a per-procedure one: `internalsVisibleTo` access is granted at the
-app level, so once a customer/partner app is listed, it can both subscribe to the event *and* call the
-other `internal` helper codeunits used while building up `InvoiceDescriptor` (e.g. `"ForNAV Map to
-eDocument"`, whose `AddTradeAllowanceCharge`/`AddParty`/etc. are all `internal` too — see
-[`reference/object-model.md`](reference/object-model.md)). `"ForNAV eDocument"`'s `Insert`/`Modify`/
-`Delete` for child records are `Access = Public` and callable from any app either way — its own
-`FindFirst` overloads are `internal`, but that's moot: don't call those directly at all, use the
-generated `FindFirstXxx` procedure on the parent record instead (see below), which is always public.
+When you need to *find* an existing child record, use the generated `FindFirstXxx` procedure on the parent
+record (see [`reference/object-model.md`](reference/object-model.md)) — don't call `"ForNAV eDocument"`'s
+own `FindFirst` overloads directly. `"ForNAV eDocument"`'s `Insert`/`Modify`/`Delete` are the supported
+way to persist child records.
 
 ## Which event to use
 
@@ -134,8 +112,7 @@ schema — follow its links to the specific version in question when precision m
 ## Testing
 
 1. Compile the customer/partner app against ZugFerd's `.alpackages` (or the freshly built ZugFerd `.app`
-   if ZugFerd itself changed) to confirm the subscriber resolves — this is where an `internalsVisibleTo`
-   problem shows up first.
+   if ZugFerd itself changed) to confirm the subscriber resolves.
 2. Exercise the actual print/attach path rather than trusting the compile alone. ZugFerd's own test
    project (`ZugFerd Test/ZugFerd.Codeunit.al`, if you have access to it) has the established pattern for
    this: `Report.SaveAs(...)` against a posted document, which runs the full mapping + event chain
